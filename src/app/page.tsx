@@ -8,7 +8,10 @@ export default function Home() {
       <nav>
         <ul>
           <li>
-            <Link href="/Labs/Lab1">Go to Lab Exercises</Link>
+            <Link href="/Labs/Lab1">Go to Lab Exercises</Link><br />
+          </li>
+          <li>
+            <Link href="/Account/Signin">Sign In</Link>
           </li>
         </ul>
       </nav>

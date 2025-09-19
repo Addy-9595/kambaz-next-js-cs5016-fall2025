@@ -1,17 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import { useParams } from "next/navigation";
+
 export default function CourseNavigation() {
+  const { cid } = useParams();
+  
   return (
     <div id="wd-courses-navigation">
-      <Link href="/Courses/1234/Home">Home</Link><br/>
-      <Link href="/Courses/1234/Modules">Modules
-        </Link><br/>
-      <Link href="/Courses/1234/Piazza">Piazza</Link><br/>
-      <Link href="/Courses/1234/Zoom">Zoom</Link><br/>
-      <Link href="/Courses/1234/Assignments">
-          Assignments</Link><br/>
-      <Link href="/Courses/1234/Quizzes">Quizzes
-        </Link><br/>
-      <Link href="/Courses/1234/Grades">Grades</Link><br/>
-      <Link href="/Courses/1234/People/Table">People</Link><br/>
+      <Link href={`/Courses/${cid}/Home`} id="wd-course-home-link">Home</Link><br/>
+      <Link href={`/Courses/${cid}/Modules`} id="wd-course-modules-link">Modules</Link><br/>
+      <Link href={`/Courses/${cid}/Piazza`} id="wd-course-piazza-link">Piazza</Link><br/>
+      <Link href={`/Courses/${cid}/Zoom`} id="wd-course-zoom-link">Zoom</Link><br/>
+      <Link href={`/Courses/${cid}/Assignments`} id="wd-course-assignments-link">
+        Assignments</Link><br/>
+      <Link href={`/Courses/${cid}/Quizzes`} id="wd-course-quizzes-link">Quizzes</Link><br/>
+      <Link href={`/Courses/${cid}/Grades`} id="wd-course-grades-link">Grades</Link><br/>
+      <Link href={`/Courses/${cid}/People/Table`} id="wd-course-people-link">People</Link><br/>
     </div>
-  );}
+  );
+}
