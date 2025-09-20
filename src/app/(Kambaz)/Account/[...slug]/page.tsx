@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function AccountCatchAll() {
-  redirect("/Account/Signin ");
+  redirect("/Account/Signin");
 }
