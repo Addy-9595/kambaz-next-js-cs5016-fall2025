@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import AccountNavigation from "./Navigation";
+import Link from "next/link";
 
 export default function AccountLayout({ 
   children 
@@ -10,7 +10,11 @@ export default function AccountLayout({
         <tbody>
           <tr>
             <td valign="top">
-              <AccountNavigation />
+              <div id="wd-account-navigation">
+                <Link href="/Account/Signin"> Signin </Link> <br />
+                <Link href="/Account/Signup"> Signup </Link> <br />
+                <Link href="/Account/Profile"> Profile </Link> <br />
+              </div>
             </td>
             <td valign="top" width="100%">
               {children}
