@@ -240,7 +240,7 @@ Your favorite books (in no particular order)
         Please
         <a href="https://www.lipsum.com" id="wd-lipsum">click here</a>
         to get dummy text<br/>
-        <a href="https://github.com" id="wd-github">My GitHub</a>
+        <a href="https://github.com/Addy-9595/kambaz-next-js-cs5016-fall2025" id="wd-github">My GitHub</a>
       </div>
     </div>
     </div>
