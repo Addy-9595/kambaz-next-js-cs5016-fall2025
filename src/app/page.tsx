@@ -4,7 +4,8 @@ export default function Home() {
   return (
     <main>
       <h1>Kambaz Application</h1>
-      <p>Welcome to the Kambaz App landing page!</p>
+      <p>Welcome to the Kambaz App landing page! Made by Atharva Dalvi MSCS</p>
+      <p>Please navigate using the links below:</p>
       <nav>
         <ul>
           <li>
