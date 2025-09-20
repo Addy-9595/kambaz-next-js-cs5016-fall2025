@@ -21,17 +21,6 @@ This is the third paragraph. Wrap each paragraph with the paragraph tag to tell 
         <h4>List Tags</h4>
         <h5>Ordered List</h5>
         <ol id="wd-my-favorite-recipe">
-           <li>Mix dry ingredients.</li>
-      <li>Add wet ingredients.</li>
-      <li>Stir to combine.</li>
-      <li>Heat a skillet or griddle.</li>
-      <li>Pour batter onto the skillet.</li>
-      <li>Cook until bubbly on top.</li>
-      <li>Flip and cook the other side.</li>
-      <li>Serve and enjoy!</li>
-  </ol>
-    <h5>My favorite recipe</h5>
-        <ol id="wd-your-favorite-recipe">
       <li>1 cup of flour</li>
       <li>2 eggs</li>
       <li>1/2 cup of sugar</li> 
@@ -88,168 +77,172 @@ Your favorite books (in no particular order)
               <td valign="top">Q3</td>
               <td valign="top">JavaScript</td>
               <td valign="top">2/17/21</td>
-              <td valign="top" align = "right">95</td>
+              <td valign="top" align="right">88</td>
             </tr>
             <tr>
               <td valign="top">Q4</td>
               <td valign="top">React</td>
               <td valign="top">2/24/21</td>
-              <td valign="top" align="right">90</td>
+              <td valign="top" align="right">92</td>
             </tr>
             <tr>
               <td valign="top">Q5</td>
               <td valign="top">Node.js</td>
               <td valign="top">3/3/21</td>
-              <td valign="top" align="right">90</td>
+              <td valign="top" align="right">78</td>
             </tr>
             <tr>
               <td valign="top">Q6</td>
-              <td valign="top">Databases</td>
+              <td valign="top">MongoDB</td>
               <td valign="top">3/10/21</td>
-              <td valign="top" align="right">85</td>
+              <td valign="top" align="right">94</td>
             </tr>
             <tr>
-            <td valign="top">Q7</td>
-              <td valign="top">APIs</td>
+              <td valign="top">Q7</td>
+              <td valign="top">REST APIs</td>
               <td valign="top">3/17/21</td>
-              <td valign="top" align="right">95</td>
+              <td valign="top" align="right">86</td>
             </tr>
             <tr>
               <td valign="top">Q8</td>
-              <td valign="top">DevOps</td>
+              <td valign="top">Authentication</td>
               <td valign="top">3/24/21</td>
-              <td valign="top" align="right">90</td>
-              </tr>
+              <td valign="top" align="right">91</td>
+            </tr>
             <tr>
               <td valign="top">Q9</td>
-              <td valign="top">Security</td>
+              <td valign="top">Testing</td>
               <td valign="top">3/31/21</td>
-              <td valign="top" align="right">85</td>
+              <td valign="top" align="right">89</td>
             </tr>
             <tr>
               <td valign="top">Q10</td>
-              <td valign="top">Testing</td>
+              <td valign="top">Deployment</td>
               <td valign="top">4/7/21</td>
               <td valign="top" align="right">95</td>
-              </tr>
+            </tr>
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan={3} align="center">Average</td>
-              <td valign="top" align="right">90</td>
+              <td colSpan={3} valign="top">Average</td>
+              <td valign="top" align="right">89</td>
             </tr>
           </tfoot>
         </table>
       </div>
+
       <div id="wd-images">
-         <h4>Image tag</h4>
-  Loading an image from the internet: <br />
-  <img id="wd-starship" width="400px"   src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg" />
-  <br />
-  Loading a local image:
-  <br />
-  <img id="wd-teslabot" src="/teslabot.jpg" height="200px" /> 
-  <br />
-  This is the teslabot image as required.
+        <h4>Image tag</h4>
+        Loading an image from the internet: <br />
+        <img id="wd-starship" width="400px" src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap2.jpg" alt="Starship" />
+        <br />
+        Loading a local image:
+        <br />
+        <img id="wd-teslabot" src="/teslabot.jpg" height="200px" alt="Tesla Bot" /> 
       </div>
+
       <div id="wd-forms">
-  <h4>Form Elements</h4>
-  <form id="wd-text-fields">
-    <h5>Text Fields</h5>
-    <label htmlFor="wd-text-fields-username">Username:</label>
-    <input placeholder="jdoe" id="wd-text-fields-username" /> <br />
-    <label htmlFor="wd-text-fields-password">Password:</label>
-    <input type="password" defaultValue="123@#$asd"
-           id="wd-text-fields-password" /><br />
-    <label htmlFor="wd-text-fields-first-name">First name:</label>
-    <input type="text" title="John" id="wd-text-fields-first-name" /> <br />
-    <label htmlFor="wd-text-fields-last-name">Last name:</label>
-    <input type="text" placeholder="Doe"
-           defaultValue="Wonderland"
-           title="The last name"
-           id="wd-text-fields-last-name" />
+        <h4>Form Elements</h4>
+        <form id="wd-text-fields">
+          <h5>Text Fields</h5>
+          <label htmlFor="wd-text-fields-username">Username:</label>
+          <input placeholder="jdoe" id="wd-text-fields-username" /> <br />
+          <label htmlFor="wd-text-fields-password">Password:</label>
+          <input type="password" defaultValue="123@#$asd"
+                 id="wd-text-fields-password" /><br />
+          <label htmlFor="wd-text-fields-first-name">First name:</label>
+          <input type="text" title="John" id="wd-text-fields-first-name" /> <br />
+          <label htmlFor="wd-text-fields-last-name">Last name:</label>
+          <input type="text" placeholder="Doe"
+                 defaultValue="Wonderland"
+                 title="The last name"
+                 id="wd-text-fields-last-name" />
 
-    <br />
-    <h4> Other HTML field types:</h4>
-    <label htmlFor="wd-field-types-email">Email-ID:</label>
-    <input type="email" placeholder="jdoe@hotmail.com"
-           id="wd-field-types-email" /> <br />
+          <h4>Other HTML field types</h4>
 
-    <label htmlFor="wd-field-types-salary-start">Starting salary:</label>
-    <input type="range" defaultValue= "50000"
-    placeholder="1000"
-           id="wd-field-types-salary-start" /><br />
-    
-    <label htmlFor="wd-text-fields-rating">Rating (between 1 and 5):</label>
-    <input type="number" defaultValue={4} min={1} max={5} placeholder="Doe"
-           id="wd-text-fields-rating" /><br />
-    
-    <label htmlFor="wd-text-fields-dob">Date of birth:</label>
-    <input type="date" defaultValue="2000-01-21"
-           id="wd-text-fields-dob" /><br />
-</form>
+          <label htmlFor="wd-text-fields-email"> Email: </label>
+          <input type="email"
+                 placeholder="jdoe@somewhere.com"
+                 id="wd-text-fields-email"/><br/>
 
-<h5> Text Boxes</h5>
-<label>Biography:</label><br />
-<textarea id="wd-textarea" cols={50} rows={10}
- defaultValue = "I was born in a small town. I went to school there and then to college. After college, I moved to the city to pursue my career. I have worked in various industries and have gained a lot of experience. In my free time, I enjoy reading, traveling, and spending time with my family and friends.">
-</textarea>
+          <label htmlFor="wd-text-fields-salary-start"> Starting salary:</label>
+          <input type="number"
+                 defaultValue="100000"
+                 placeholder="1000"
+                 id="wd-text-fields-salary-start"/><br/>
 
-<h5 id = "wd-buttons">Buttons</h5>
-<button
-  type="button"
-  id="wd-all-good"
-  onClick={() => alert('Life is Good!')}
->
-  Hello World!
-</button>
+          <label htmlFor="wd-text-fields-rating"> Rating: </label>
+          <input type="range"
+                 defaultValue="4"
+                 max="5"
+                 placeholder="Doe"
+                 id="wd-text-fields-rating"/><br/>
 
-<h5 id="wd-radio-buttons">Radio Buttons</h5>
-<label> Favourite movie genre: </label>
-<input type="radio" name="radio-genre" id = "wd-radio-comedy" />
-<label htmlFor="wd-radio-comedy">Comedy</label>
-<input type="radio" name="radio-genre" id = "wd-radio-drama" />
-<label htmlFor="wd-radio-drama">Drama</label>
-<input type="radio" name="radio-genre" id = "wd-radio-scifi" />
-<label htmlFor="wd-radio-scifi">Science Fiction</label>
-<input type="radio" name="radio-genre" id = "wd-radio-fantasy" />
-<label htmlFor="wd-radio-fantasy">Fantasy</label>
+          <label htmlFor="wd-text-fields-dob"> Date of birth: </label>
+          <input type="date"
+                 defaultValue="2000-01-21"
+                 id="wd-text-fields-dob"/><br/>
+        </form>
 
-<h5 id="wd-check-boxes">Check Boxes</h5>
-<label>Favourite movie genre: </label><br />
-<input type="checkbox" name="check-gnere" id = "wd-chkbox-comedy" />
-<label htmlFor="wd-chkbox-comedy">Comedy</label><br />
-<input type="checkbox" name="check-genre" id = "wd-chkbox-drama" />
-<label htmlFor="wd-chkbox-drama">Drama</label><br />
-<input type="checkbox" name="check-genre" id = "wd-chkbox-scifi" />
-<label htmlFor="wd-chkbox-scifi">Science Fiction</label><br />
-<input type="checkbox" name="check-genre" id = "wd-chkbox-fantasy" />
-<label htmlFor="wd-chkbox-fantasy">Fantasy</label><br />
+        <h5>Text boxes</h5>
+        <label>Biography:</label><br/>
+        <textarea id="wd-textarea" cols={30} rows={10} defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."></textarea>
 
-<h4 id= "wd-dropdowns">Dropdowns</h4>
-<h5>Select one</h5>
-<label htmlFor="wd-select-one-genre"> Favorite movie genre: </label><br />
-<select id="wd-select-one-genre" defaultValue={"scifi"}>
-  <option value="comedy">Comedy</option>
-  <option value="drama">Drama</option>
-  <option value="scifi">Science Fiction</option>
-  <option value="fantasy">Fantasy</option>
-</select>
+        <h5 id="wd-buttons">Buttons</h5>
+        <button type="button"
+                onClick={() => alert("Life is Good!")}
+                id="wd-all-good">
+          Hello World!
+        </button>
 
-<h5>Select multiple</h5>
-<label htmlFor="wd-select-multiple-genre"> Favorite movie genres: </label><br />
-<select id="wd-select-multiple-genre" multiple defaultValue={["comedy", "scifi"]}>
-  <option value="comedy">Comedy</option>
-  <option value="drama">Drama</option>
-  <option value="scifi">Science Fiction</option>
-  <option value="fantasy">Fantasy</option>
-</select>
+        <h5 id="wd-radio-buttons">Radio buttons</h5>
+        <label>Favorite movie genre:</label><br />
+        <input type="radio" name="radio-genre" id="wd-radio-comedy"/>
+        <label htmlFor="wd-radio-comedy">Comedy</label><br />
+        <input type="radio" name="radio-genre" id="wd-radio-drama"/>
+        <label htmlFor="wd-radio-drama">Drama</label><br />
+        <input type="radio" name="radio-genre" id="wd-radio-scifi"/>
+        <label htmlFor="wd-radio-scifi">Science Fiction</label><br />
+        <input type="radio" name="radio-genre" id="wd-radio-fantasy"/>
+        <label htmlFor="wd-radio-fantasy">Fantasy</label>
 
-<h4>Anchor Tag</h4>
-Please <a href = "https://lipsum.com/" id = "wd-lipsum"> Click Here </a> to get dummy text <br />
-<a href = "https://github.com/Addy-9595/kambaz-next-js-cs5016-fall2025" id = "wd-github">My Github</a>
+        <h5 id="wd-checkboxes">Checkboxes</h5>
+        <label>Favorite movie genre:</label><br/>
+        <input type="checkbox" name="check-genre" id="wd-chkbox-comedy"/>
+        <label htmlFor="wd-chkbox-comedy">Comedy</label><br/>
+        <input type="checkbox" name="check-genre" id="wd-chkbox-drama"/>
+        <label htmlFor="wd-chkbox-drama">Drama</label><br/>
+        <input type="checkbox" name="check-genre" id="wd-chkbox-scifi"/>
+        <label htmlFor="wd-chkbox-scifi">Science Fiction</label><br/>
+        <input type="checkbox" name="check-genre" id="wd-chkbox-fantasy"/>
+        <label htmlFor="wd-chkbox-fantasy">Fantasy</label>
+
+        <h4 id="wd-dropdowns">Dropdowns</h4>
+        <h5>Select one</h5>
+        <label htmlFor="wd-select-one-genre"> Favorite movie genre: </label><br/>
+        <select id="wd-select-one-genre" defaultValue="SCIFI">
+           <option value="COMEDY">Comedy</option>
+           <option value="DRAMA">Drama</option>
+           <option value="SCIFI">Science Fiction</option>
+           <option value="FANTASY">Fantasy</option>
+        </select>
+
+        <h5>Select many</h5>
+        <label htmlFor="wd-select-many-genre"> Favorite movie genres: </label><br/>
+        <select multiple id="wd-select-many-genre" defaultValue={["COMEDY", "SCIFI"]}>
+           <option value="COMEDY">Comedy</option>
+           <option value="DRAMA">Drama</option>
+           <option value="SCIFI">Science Fiction</option>
+           <option value="FANTASY">Fantasy</option>
+        </select>
+
+        <h4>Anchor tag</h4>
+        Please
+        <a href="https://www.lipsum.com" id="wd-lipsum">click here</a>
+        to get dummy text<br/>
+        <a href="https://github.com" id="wd-github">My GitHub</a>
       </div>
     </div>
     </div>
-  );
+);
 }
