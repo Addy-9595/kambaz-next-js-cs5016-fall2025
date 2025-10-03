@@ -1,0 +1,74 @@
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body * {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Kambaz Main Content Offset for Navigation Sidebar */
+@media (min-width: 768px) {
+  #wd-kambaz .wd-main-content-offset {
+    padding-left: 140px !important;
+  }
+}
+
+/* Override Bootstrap Secondary Button Colors */
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #c7cdd1 !important;
+  --bs-btn-border-color: #c7cdd1 !important;
+  --bs-btn-hover-color: #fff !important;
+}
+
+/* Override Bootstrap Secondary Background */
+.bg-secondary {
+  --bs-secondary-rgb: 199, 205, 209;
+}
+
+/* List Group Border Color */
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+
+/* Course Navigation Active Link Styling */
+.list-group.wd > .list-group-item.active {
+  color: black;
+  background-color: white;
+  border-left: 3px solid black !important;
+}
+
+/* Module Lessons Green Left Border */
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+
+/* Kambaz Navigation Hover Effects */
+#wd-kambaz-navigation .list-group-item {
+  transition: background-color 0.2s ease;
+}
+
+/* Hover effect for black background items */
+#wd-kambaz-navigation .list-group-item.bg-black:hover {
+  background-color: white !important;
+}
+
+#wd-kambaz-navigation .list-group-item.bg-black:hover a {
+  color: #dc3545 !important;
+}
+
+#wd-kambaz-navigation .list-group-item.bg-black:hover .text-white,
+#wd-kambaz-navigation .list-group-item.bg-black:hover .text-danger {
+  color: #dc3545 !important;
+}
+
+/* Keep white background items white on hover but change text to red if not already */
+#wd-kambaz-navigation .list-group-item.bg-white:hover a {
+  color: #dc3545 !important;
+}
+
+#wd-kambaz-navigation .list-group-item.bg-white:hover .text-danger {
+  color: #dc3545 !important;
+}
