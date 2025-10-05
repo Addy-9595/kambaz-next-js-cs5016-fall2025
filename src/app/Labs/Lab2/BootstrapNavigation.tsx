@@ -8,7 +8,7 @@ export default function BootstrapNavigation() {
                 <h2>Tabs</h2>
                 <Nav variant="tabs">
                     <NavItem>
-                        <NavLink href="#/Labs/Lab2/Active">Active</NavLink>
+                        <NavLink href="https://github.com/Addy-9595/kambaz-next-js-cs5016-fall2025">Active</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink href="#/Labs/Lab2/Link1">Link 1</NavLink>

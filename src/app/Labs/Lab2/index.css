@@ -1,5 +1,5 @@
 /* Basic paragraph styling */
-p {
+p#wd-p1 {
   background-color: green;
   color: white;
 }
