@@ -244,5 +244,5 @@ Your favorite books (in no particular order)
       </div>
     </div>
     </div>
-);
+  );
 }

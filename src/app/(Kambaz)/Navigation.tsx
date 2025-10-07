@@ -46,7 +46,7 @@ export default function KambazNavigation() {
 
             {/* Courses Link - Black background, white text, red icon */}
             <ListGroupItem className="border-0 bg-black text-center">
-                <Link href="/Courses/1234/Home" id="wd-courses-link" className="text-white text-decoration-none">
+                <Link href="/Dashboard" id="wd-courses-link" className="text-white text-decoration-none">
                     <LiaBookSolid className="fs-1 text-danger" />
                     <br />
                     Courses
