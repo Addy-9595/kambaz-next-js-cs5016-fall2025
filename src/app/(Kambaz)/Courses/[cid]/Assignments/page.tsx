@@ -65,7 +65,7 @@ export default function Assignments() {
                                         >
                                             {assignment.title}
                                         </Link>
-                                        <div className="text-danger small">
+                                        <div className="text-danger small" suppressHydrationWarning>
                                             Multiple Modules | Not available until{" "}
                                             {new Date(assignment.availableFrom).toLocaleDateString()} |
                                             <br />
