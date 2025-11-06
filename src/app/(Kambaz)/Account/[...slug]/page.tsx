@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 //This is the catch-all account page that handles signin, signup, profile, etc.
 export default async function AccountCatchAll({ 

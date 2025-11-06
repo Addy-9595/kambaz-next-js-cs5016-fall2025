@@ -7,6 +7,7 @@ import { IoMdHome } from "react-icons/io";
 import { MdOutlineAnnouncement } from "react-icons/md";
 import { Button } from "react-bootstrap";
 
+// Course status management component
 export default function CourseStatus() {
     return (
         <div id="wd-course-status" style={{ width: "350px" }}>

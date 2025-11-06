@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode } from "react";
 import AccountNavigation from "./Navigation";
-
+// Layout component for Account section
 export default function AccountLayout({ children }: { children: ReactNode }) {
   return (
     <div className="d-flex">
