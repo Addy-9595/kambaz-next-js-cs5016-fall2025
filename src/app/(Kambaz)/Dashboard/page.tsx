@@ -11,7 +11,7 @@ export default function Dashboard() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { enrollments } = db;
   const dispatch = useDispatch();
-  
+  // State for new course form
   const [course, setCourse] = useState({
     _id: "0",
     name: "New Course",

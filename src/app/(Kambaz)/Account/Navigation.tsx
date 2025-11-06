@@ -8,7 +8,7 @@ export default function AccountNavigation() {
   console.log("Current User:", currentUser);
   const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
   const pathname = usePathname();
-
+// Render navigation menu
   return (
     <div id="wd-account-navigation" className="list-group fs-5 rounded-0">
       {links.map((link) => {

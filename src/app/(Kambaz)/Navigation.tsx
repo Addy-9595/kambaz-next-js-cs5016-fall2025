@@ -15,6 +15,7 @@ export default function KambazNavigation() {
     { label: "Inbox",     path: "/Inbox",     icon: FaInbox },
     { label: "Labs",      path: "/Labs",      icon: LiaCogSolid },
   ];
+  // Render navigation menu
     return (
     <ListGroup id="wd-kambaz-navigation" style={{width: 120}}
          className="rounded-0 position-fixed bottom-0 top-0
@@ -31,7 +32,6 @@ export default function KambazNavigation() {
           className={`fs-1 ${pathname.includes("Account") ?
              "text-danger" : "text-white"}`} /> <br /> Account
       </ListGroupItem>
-\
       {links.map((link) => (
         <ListGroupItem key={link.label} as={Link}
                        href={link.path}

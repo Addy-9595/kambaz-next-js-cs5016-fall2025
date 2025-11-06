@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import KambazNavigation from "./Navigation";
 import "./styles.css";
-
+// Layout component for Kambaz section
 export default function KambazLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {

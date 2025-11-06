@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-
+// Redirect to Home page of the course
 export default async function CoursesPage({ 
   params, 
 }: { 

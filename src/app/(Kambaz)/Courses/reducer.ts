@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 const initialState = {
   courses: courses,
 };
-
+// app/(Kambaz)/Courses/reducer.ts
 const coursesSlice = createSlice({
   name: "courses",
   initialState,
