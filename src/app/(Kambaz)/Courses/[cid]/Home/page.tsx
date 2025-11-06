@@ -8,6 +8,7 @@ export default function Home() {
   const { courses } = useSelector((state: any) => state.coursesReducer);
   const course = courses.find((course: any) => course._id === cid);
 
+  // You can use the 'course' object as needed within this component
   return (
     <div id="wd-home">
       <div className="d-flex justify-content-end mb-3">

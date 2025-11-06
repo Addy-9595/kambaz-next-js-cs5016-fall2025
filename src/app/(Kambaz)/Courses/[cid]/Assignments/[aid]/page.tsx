@@ -52,7 +52,7 @@ export default function AssignmentEditor() {
     availableUntil: getCurrentDateTime(),
     course: cid as string,
   });
-
+// Populate form if editing an existing assignment
   useEffect(() => {
     if (aid !== "new") {
       const existingAssignment = assignments.find((a: any) => a._id === aid);
