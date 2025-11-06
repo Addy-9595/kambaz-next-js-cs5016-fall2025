@@ -8,12 +8,10 @@ export default function PeopleTable() {
     const { cid } = useParams();
     const { users, enrollments } = db;
     
-    // Debug: Log the values to see what's happening
     console.log("Course ID (cid):", cid);
     console.log("All enrollments:", enrollments);
     console.log("All users:", users);
     
-    // Filter enrolled users
     const enrolledUsers = users.filter((usr) =>
         enrollments.some((enrollment) =>
             enrollment.user === usr._id && enrollment.course === cid

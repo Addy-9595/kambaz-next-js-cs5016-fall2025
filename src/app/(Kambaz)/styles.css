@@ -1,74 +1,71 @@
-/* Global Styles */
-body {
-  margin: 0;
-  padding: 0;
+/* app/(Kambaz)/styles.css */
+#wd-kambaz-navigation {
+  width: 120px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
 }
 
-body * {
-  font-family: Arial, Helvetica, sans-serif;
+.wd-kambaz-course-link {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Kambaz Main Content Offset for Navigation Sidebar */
-@media (min-width: 768px) {
-  #wd-kambaz .wd-main-content-offset {
-    padding-left: 140px !important;
-  }
+#wd-courses-navigation {
+  width: 200px;
+  margin-right: 1rem;
 }
 
-/* Override Bootstrap Secondary Button Colors */
-.btn-secondary {
-  --bs-btn-color: #000 !important;
-  --bs-btn-bg: #c7cdd1 !important;
-  --bs-btn-border-color: #c7cdd1 !important;
-  --bs-btn-hover-color: #fff !important;
-}
-
-/* Override Bootstrap Secondary Background */
-.bg-secondary {
-  --bs-secondary-rgb: 199, 205, 209;
-}
-
-/* List Group Border Color */
-.list-group-item {
-  --bs-list-group-border-color: gray;
-}
-
-/* Course Navigation Active Link Styling */
-.list-group.wd > .list-group-item.active {
-  color: black;
-  background-color: white;
-  border-left: 3px solid black !important;
-}
-
-/* Module Lessons Green Left Border */
-.wd-lesson {
-  border-left: 3px solid green !important;
-}
-
-/* Kambaz Navigation Hover Effects */
-#wd-kambaz-navigation .list-group-item {
-  transition: background-color 0.2s ease;
-}
-
-/* Hover effect for black background items */
-#wd-kambaz-navigation .list-group-item.bg-black:hover {
+.list-group-item.active {
   background-color: white !important;
+  border-color: white !important;
 }
 
-#wd-kambaz-navigation .list-group-item.bg-black:hover a {
-  color: #dc3545 !important;
+/* Main content should have left margin to account for fixed sidebar */
+#wd-kambaz {
+  display: flex;
 }
 
-#wd-kambaz-navigation .list-group-item.bg-black:hover .text-white,
-#wd-kambaz-navigation .list-group-item.bg-black:hover .text-danger {
-  color: #dc3545 !important;
+#wd-kambaz > div:first-child {
+  flex-shrink: 0;
+  width: 120px;
 }
 
-/* Keep white background items white on hover but change text to red if not already */
-#wd-kambaz-navigation .list-group-item.bg-white:hover a {
-  color: #dc3545 !important;
+#wd-kambaz > div:last-child {
+  flex: 1;
+  margin-left: 0;
+  width: calc(100% - 120px);
 }
 
-#wd-kambaz-navigation .list-group-item.bg-white:hover .text-danger {
-  color: #dc3545 !important;
+.border-gray {
+  border-color: #dee2e6 !important;
+}
+
+.wd-modules .list-group-item {
+  border: 1px solid #dee2e6;
+}
+
+.wd-title {
+  background-color: #f8f9fa;
+}
+
+/* Make cursor pointer for clickable icons */
+.text-danger,
+.text-primary,
+.text-success {
+  cursor: pointer;
+}
+
+/* Adjustments for responsive design */
+@media (max-width: 768px) {
+  #wd-kambaz-navigation {
+    display: none;
+  }
+  
+  #wd-kambaz > div:last-child {
+    width: 100%;
+    margin-left: 0;
+  }
 }

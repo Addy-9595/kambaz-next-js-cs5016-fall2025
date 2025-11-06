@@ -1,35 +1,32 @@
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSelector } from "react-redux";
 
 export default function AccountNavigation() {
-    const pathname = usePathname();
-    
-    return (
-        <div id="wd-account-navigation" className="wd list-group fs-5 rounded-0">
-            <Link 
-                href="/Account/Signin" 
-                id="wd-account-signin-link"
-                className={`list-group-item border-0 ${pathname === '/Account/Signin' ? 'active' : 'text-danger'}`}
-            >
-                Signin
-            </Link>
-            <br />
-            <Link 
-                href="/Account/Signup" 
-                id="wd-account-signup-link"
-                className={`list-group-item border-0 ${pathname === '/Account/Signup' ? 'active' : 'text-danger'}`}
-            >
-                Signup
-            </Link>
-            <br />
-            <Link 
-                href="/Account/Profile" 
-                id="wd-account-profile-link"
-                className={`list-group-item border-0 ${pathname === '/Account/Profile' ? 'active' : 'text-danger'}`}
-            >
-                Profile
-            </Link>
-            <br />
-        </div>
-    );
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  console.log("Current User:", currentUser);
+  const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
+  const pathname = usePathname();
+
+  return (
+    <div id="wd-account-navigation" className="list-group fs-5 rounded-0">
+      {links.map((link) => {
+        const isActive = pathname.includes(link);
+        return (
+          <Link
+            key={link}
+            href={`/Account/${link}`}
+            className={`list-group-item border border-0 ${
+              isActive
+                ? "active text-black border-start border-start-4 border-primary"
+                : "text-danger"
+            }`}
+          >
+            {link}
+          </Link>
+        );
+      })}
+    </div>
+  );
 }
