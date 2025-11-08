@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 export default function AccountNavigation() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   console.log("Current User:", currentUser);
-  const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
+  const links = currentUser ? ["Profile"] : ["SignIn", "Signup"];
   const pathname = usePathname();
 // Render navigation menu
   return (

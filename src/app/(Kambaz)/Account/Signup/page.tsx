@@ -18,7 +18,7 @@ export default function Signup() {
   const signup = () => {
     // In a real app, this would call an API
     console.log("Signup:", user);
-    router.push("/Account/Signin");
+    router.push("/Account/SignIn");
   };
 
   return (
@@ -59,7 +59,7 @@ export default function Signup() {
       <Button onClick={signup} className="w-100 mb-2">
         Sign up
       </Button>
-      <Link href="/Account/Signin">Sign in</Link>
+      <Link href="/Account/SignIn">Sign in</Link>
     </div>
   );
 }

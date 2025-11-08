@@ -15,7 +15,7 @@ export default function ProtectedRoute({ children }: { children: any }) {
       
       // Only redirect if still no user after checking
       if (!currentUser) {
-        router.push("/Account/Signin");
+        router.push("/Account/SignIn");
       }
     }, 100); // 100ms delay to let localStorage load
 

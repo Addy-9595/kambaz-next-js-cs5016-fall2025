@@ -9,7 +9,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (!currentUser) {
-      router.push("/Account/Signin");
+      router.push("/Account/SignIn");
     } else {
       router.push("/Account/Profile");
     }

@@ -12,7 +12,7 @@ export default function Home() {
             <Link href="/Labs/Lab1">Go to Lab Exercises</Link><br />
           </li>
           <li>
-            <Link href="/Account/Signin">Sign In</Link>
+            <Link href="/Account/SignIn">Sign In</Link>
           </li>
         </ul>
       </nav>

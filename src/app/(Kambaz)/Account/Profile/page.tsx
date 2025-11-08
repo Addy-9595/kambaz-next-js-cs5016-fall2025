@@ -5,7 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "../reducer";
 import { Button, FormControl } from "react-bootstrap";
 
+
 export default function Profile() {
+  const handleSignout = () => {
+  dispatch(setCurrentUser(null));
+  router.push("/Account/SignIn");
+};
   const dispatch = useDispatch();
   const router = useRouter();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -25,7 +30,7 @@ export default function Profile() {
   useEffect(() => {
     // Redirect if not logged in
     if (!currentUser) {
-      router.push("/Account/Signin");
+      router.push("/Account/SignIn");
       return;
     }
     
@@ -44,7 +49,7 @@ export default function Profile() {
 
   const signout = () => {
     dispatch(setCurrentUser(null));
-    router.push("/Account/Signin");
+    router.push("/Account/SignIn");
   };
 
   const handleSave = () => {
