@@ -1,4 +1,3 @@
-// In your Signin page or component
 "use client";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -6,13 +5,19 @@ import { useRouter } from "next/navigation";
 import { setCurrentUser } from "../reducer";
 import * as db from "../../Database";
 import Link from "next/link";
+import { Button, FormControl } from "react-bootstrap";
 
 export default function Signin() {
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [credentials, setCredentials] = useState({ 
+    username: "", 
+    password: "" 
+  });
   const dispatch = useDispatch();
   const router = useRouter();
 
   const handleSignin = () => {
+    console.log("🔐 Attempting signin with:", credentials.username);
+    
     const user = db.users.find(
       (u: any) => 
         u.username === credentials.username && 
@@ -20,38 +25,53 @@ export default function Signin() {
     );
     
     if (user) {
+      console.log("✅ User found:", user);
       dispatch(setCurrentUser(user));
-      router.push("/Dashboard");
+      
+      // Small delay to ensure Redux updates
+      setTimeout(() => {
+        router.push("/Dashboard");
+      }, 100);
     } else {
-      alert("Invalid credentials!");
+      console.log("❌ Invalid credentials");
+      alert("Invalid username or password!");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSignin();
     }
   };
 
   return (
     <div id="wd-signin-screen" className="p-4">
       <h3>Sign in</h3>
-      <input 
+      <FormControl
         id="wd-username"
-        placeholder="username" 
-        className="form-control mb-2"
+        placeholder="username"
+        className="mb-2"
         value={credentials.username}
         onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+        onKeyPress={handleKeyPress}
       />
-      <input 
+      <FormControl
         id="wd-password"
-        placeholder="password" 
-        type="password" 
-        className="form-control mb-2"
+        placeholder="password"
+        type="password"
+        className="mb-2"
         value={credentials.password}
         onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+        onKeyPress={handleKeyPress}
       />
-      <button 
+      <Button 
         onClick={handleSignin}
-        className="btn btn-primary w-100 mb-2"
+        variant="primary"
+        className="w-100 mb-2"
         id="wd-signin-btn"
       >
         Sign in
-      </button>
+      </Button>
       <Link href="/Account/Signup" id="wd-signup-link">
         Sign up
       </Link>

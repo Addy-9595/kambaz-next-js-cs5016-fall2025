@@ -1,11 +1,16 @@
-// app/(Kambaz)/Account/reducer.ts
 import { createSlice } from "@reduxjs/toolkit";
 
-// Load initial state from localStorage
+// Load from localStorage
 const loadUserFromStorage = () => {
   if (typeof window !== 'undefined') {
-    const stored = localStorage.getItem('currentUser');
-    return stored ? JSON.parse(stored) : null;
+    try {
+      const stored = localStorage.getItem('currentUser');
+      console.log("📦 Loading from localStorage:", stored);
+      return stored ? JSON.parse(stored) : null;
+    } catch (error) {
+      console.error("Error loading user from storage:", error);
+      return null;
+    }
   }
   return null;
 };
@@ -19,13 +24,21 @@ const accountSlice = createSlice({
   initialState,
   reducers: {
     setCurrentUser: (state, action) => {
+      console.log("💾 Setting current user:", action.payload);
       state.currentUser = action.payload;
+      
       // Persist to localStorage
       if (typeof window !== 'undefined') {
-        if (action.payload) {
-          localStorage.setItem('currentUser', JSON.stringify(action.payload));
-        } else {
-          localStorage.removeItem('currentUser');
+        try {
+          if (action.payload) {
+            localStorage.setItem('currentUser', JSON.stringify(action.payload));
+            console.log("✅ Saved to localStorage");
+          } else {
+            localStorage.removeItem('currentUser');
+            console.log("🗑️ Removed from localStorage");
+          }
+        } catch (error) {
+          console.error("Error saving to storage:", error);
         }
       }
     },
