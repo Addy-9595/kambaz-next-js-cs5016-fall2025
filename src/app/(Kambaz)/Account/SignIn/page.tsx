@@ -7,7 +7,7 @@ import * as db from "../../Database";
 import Link from "next/link";
 import { Button, FormControl } from "react-bootstrap";
 
-export default function Signin() {
+export default function SignIn() {
   const [credentials, setCredentials] = useState({ 
     username: "", 
     password: "" 

@@ -28,7 +28,7 @@ export default function Labs() {
           <Link href="/Labs/Lab5" className="nav-link">Lab 5</Link>
         </li>
         <li className="nav-item">
-          <Link href="/Account/Signin" className="nav-link">Kambaz (Login using the credentials given in users.json)</Link>
+          <Link href="/Account/SignIn" className="nav-link">Kambaz (Login using the credentials given in users.json)</Link>
         </li>
       </ul>
     </div>
