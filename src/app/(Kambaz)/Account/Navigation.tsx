@@ -1,25 +1,28 @@
 "use client";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useSelector } from "react-redux";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function AccountNavigation() {
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
-  console.log("Current User:", currentUser);
-  const links = currentUser ? ["Profile"] : ["SignIn", "Signup"];
-  const pathname = usePathname();
-// Render navigation menu
+  const [currentPath, setCurrentPath] = useState("");
+  const links = ["SignIn", "Signup", "Profile"];
+
+  useEffect(() => {
+    setCurrentPath(window.location.pathname);
+  }, []);
+
   return (
-    <div id="wd-account-navigation" className="list-group fs-5 rounded-0">
+    <div id="wd-account-navigation" className="list-group">
       {links.map((link) => {
-        const isActive = pathname.includes(link);
+        const isActive = currentPath.includes(link);
+        
         return (
           <Link
             key={link}
             href={`/Account/${link}`}
             className={`list-group-item border border-0 ${
               isActive
-                ? "active text-black border-start border-start-4 border-primary"
+                ? "active text-black border-start border-start-4 border-danger"
                 : "text-danger"
             }`}
           >

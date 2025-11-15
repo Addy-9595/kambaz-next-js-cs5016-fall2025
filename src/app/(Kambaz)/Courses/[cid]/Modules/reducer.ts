@@ -1,42 +1,45 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { modules } from "../../../Database";
-import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
-  modules: modules,
+  modules: [] as any[],
 };
 
 const modulesSlice = createSlice({
   name: "modules",
   initialState,
   reducers: {
-    addModule: (state, { payload: module }) => {
-      const newModule: any = {
-        _id: uuidv4(),
-        lessons: [],
-        name: module.name,
-        course: module.course,
-      };
-      state.modules = [...state.modules, newModule] as any;
+    setModules: (state, action) => {
+      state.modules = action.payload;
     },
-    deleteModule: (state, { payload: moduleId }) => {
-      state.modules = state.modules.filter(
-        (m: any) => m._id !== moduleId
+    addModule: (state, action) => {
+      state.modules = [...state.modules, action.payload];
+    },
+    updateModule: (state, action) => {
+      state.modules = state.modules.map((module: any) =>
+        module._id === action.payload._id ? action.payload : module
       );
     },
-    updateModule: (state, { payload: module }) => {
-      state.modules = state.modules.map((m: any) =>
-        m._id === module._id ? module : m
-      ) as any;
+    deleteModule: (state, action) => {
+      state.modules = state.modules.filter(
+        (module: any) => module._id !== action.payload
+      );
     },
-    editModule: (state, { payload: moduleId }) => {
-      state.modules = state.modules.map((m: any) =>
-        m._id === moduleId ? { ...m, editing: true } : m
-      ) as any;
+    editModule: (state, action) => {
+      state.modules = state.modules.map((module: any) =>
+        module._id === action.payload
+          ? { ...module, editing: true }
+          : { ...module, editing: false }
+      );
     },
   },
 });
 
-export const { addModule, deleteModule, updateModule, editModule } =
-  modulesSlice.actions;
+export const { 
+  setModules, 
+  addModule, 
+  updateModule, 
+  deleteModule, 
+  editModule 
+} = modulesSlice.actions;
+
 export default modulesSlice.reducer;

@@ -23,7 +23,7 @@ export default function KambazNavigation() {
       <ListGroupItem id="wd-neu-link" target="_blank"
                      href="https://www.northeastern.edu/"
         action className="bg-black border-0 text-center">
-        <img src="/NEU.jpg" width="75px" /></ListGroupItem>
+        <img src="/images/NEU.jpg" width="75px" /></ListGroupItem>
       <ListGroupItem as={Link} href="/Account"
         className={`text-center border-0 bg-black
             ${pathname.includes("Account") ?

@@ -1,15 +1,11 @@
-"use client";
 import axios from "axios";
 
-// Use the NEXT_PUBLIC_HTTP_SERVER env var if set, otherwise fallback to local node server.
-const REMOTE_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER ?? "http://localhost:4000";
-
-// Ensure TODOS_API is defined before the functions that use it
-const TODOS_API = `${REMOTE_SERVER}/lab5/todos`;
-const ASSIGNMENT_API = `${REMOTE_SERVER}/lab5/assignment`;
+const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER || "http://localhost:4000";
+const ASSIGNMENT_API = `${HTTP_SERVER}/lab5/assignment`;
+const TODOS_API = `${HTTP_SERVER}/lab5/todos`;
 
 export const fetchWelcomeMessage = async () => {
-  const response = await axios.get(`${REMOTE_SERVER}/lab5/welcome`);
+  const response = await axios.get(`${HTTP_SERVER}/lab5/welcome`);
   return response.data;
 };
 
@@ -18,12 +14,37 @@ export const fetchAssignment = async () => {
   return response.data;
 };
 
-export const createTodo = async () => {
+export const updateTitle = async (title: string) => {
+  const response = await axios.get(`${ASSIGNMENT_API}/title/${title}`);
+  return response.data;
+};
+
+export const fetchTodos = async () => {
+  const response = await axios.get(`${TODOS_API}`);
+  return response.data;
+};
+
+export const createNewTodo = async () => {
   const response = await axios.get(`${TODOS_API}/create`);
   return response.data;
 };
 
-export const postTodo = async (todo: any) => {
+export const postNewTodo = async (todo: any) => {
   const response = await axios.post(`${TODOS_API}`, todo);
+  return response.data;
+};
+
+export const updateTodo = async (todo: any) => {
+  const response = await axios.put(`${TODOS_API}/${todo.id}`, todo);
+  return response.data;
+};
+
+export const removeTodo = async (todo: any) => {
+  const response = await axios.get(`${TODOS_API}/${todo.id}/delete`);
+  return response.data;
+};
+
+export const deleteTodo = async (todo: any) => {
+  const response = await axios.delete(`${TODOS_API}/${todo.id}`);
   return response.data;
 };

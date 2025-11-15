@@ -1,37 +1,29 @@
+// app/(Kambaz)/Courses/[cid]/Assignments/[aid]/page.tsx
 "use client";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addAssignment, updateAssignment } from "../reducer";
-import { useState, useEffect } from "react";
-import { FormControl, FormGroup, FormLabel, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
+import * as client from "../client";
 
-// Helper to get current date in datetime-local format (YYYY-MM-DDTHH:mm)
-const getCurrentDateTime = () => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  return `${year}-${month}-${day}T${hours}:${minutes}`;
-};
-
-// Helper to format date string to datetime-local format
-const formatDateTime = (dateString: string | undefined | null) => {
-  if (!dateString) return getCurrentDateTime();
+// Format date for datetime-local input (YYYY-MM-DDTHH:mm)
+const formatDateForInput = (dateString: string | undefined | null) => {
+  if (!dateString) return "";
   
   try {
     const date = new Date(dateString);
-    if (isNaN(date.getTime())) return getCurrentDateTime();
+    if (isNaN(date.getTime())) return "";
     
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   } catch {
-    return getCurrentDateTime();
+    return "";
   }
 };
 
@@ -39,134 +31,244 @@ export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
-  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-
-  // Initialize with proper datetime format
+  
+  const isNewAssignment = aid === "new";
+  
   const [assignment, setAssignment] = useState({
-    _id: "",
     title: "",
     description: "",
     points: 100,
-    dueDate: getCurrentDateTime(),
-    availableFrom: getCurrentDateTime(),
-    availableUntil: getCurrentDateTime(),
+    dueDate: "",
+    availableFrom: "",
+    availableUntil: "",
     course: cid as string,
   });
-// Populate form if editing an existing assignment
-  useEffect(() => {
-    if (aid !== "new") {
-      const existingAssignment = assignments.find((a: any) => a._id === aid);
-      if (existingAssignment) {
-        setAssignment({
-          ...existingAssignment,
-          dueDate: formatDateTime(existingAssignment.dueDate),
-          availableFrom: formatDateTime(existingAssignment.availableFrom),
-          availableUntil: formatDateTime(existingAssignment.availableUntil),
-          course: cid as string,
-        });
-      }
-    }
-  }, [aid, assignments, cid]);
+  
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSave = () => {
-    if (aid === "new") {
-      dispatch(addAssignment(assignment));
+  // Fetch assignment if editing existing one
+  useEffect(() => {
+    const fetchAssignment = async () => {
+      if (!isNewAssignment && aid) {
+        try {
+          setLoading(true);
+          const data = await client.findAssignmentById(aid as string);
+          setAssignment({
+            ...data,
+            dueDate: formatDateForInput(data.dueDate),
+            availableFrom: formatDateForInput(data.availableFrom),
+            availableUntil: formatDateForInput(data.availableUntil),
+          });
+        } catch (error) {
+          console.error("Error fetching assignment:", error);
+          setError("Failed to load assignment");
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    
+    fetchAssignment();
+  }, [aid, isNewAssignment]);
+
+  // Handle form submission
+const handleSave = async () => {
+  // Validation
+  if (!assignment.title.trim()) {
+    setError("Assignment title is required");
+    return;
+  }
+  
+  if (!assignment.dueDate) {
+    setError("Due date is required");
+    return;
+  }
+  
+  try {
+    setLoading(true);
+    setError("");
+    
+    // ✅ FIXED: Better date conversion
+    const assignmentData = {
+      title: assignment.title,
+      description: assignment.description,
+      points: Number(assignment.points) || 100,
+      course: assignment.course,
+      // Only convert non-empty dates
+      dueDate: assignment.dueDate ? new Date(assignment.dueDate).toISOString() : new Date().toISOString(),
+      availableFrom: assignment.availableFrom ? new Date(assignment.availableFrom).toISOString() : new Date().toISOString(),
+      availableUntil: assignment.availableUntil ? new Date(assignment.availableUntil).toISOString() : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    };
+    
+    console.log("💾 Saving assignment data:", assignmentData);  // ✅ Add logging
+    
+    if (isNewAssignment) {
+      // Create new assignment
+      const newAssignment = await client.createAssignment(cid as string, assignmentData);
+      console.log("✅ New assignment created:", newAssignment);  // ✅ Add logging
+      dispatch(addAssignment(newAssignment));
     } else {
-      dispatch(updateAssignment(assignment));
+      // Update existing assignment
+      const updatedAssignment = await client.updateAssignment({
+        ...assignmentData,
+        _id: aid,
+      });
+      console.log("✅ Assignment updated:", updatedAssignment);  // ✅ Add logging
+      dispatch(updateAssignment(updatedAssignment));
     }
+    
+    // Navigate back to assignments list
     router.push(`/Courses/${cid}/Assignments`);
-  };
+  } catch (error: any) {
+    console.error("❌ Error saving assignment:", error);
+    console.error("📛 Error details:", error.response?.data);  // ✅ Add logging
+    setError(error.response?.data?.message || "Failed to save assignment. Please try again.");
+    setLoading(false);
+  }
+};
 
   const handleCancel = () => {
     router.push(`/Courses/${cid}/Assignments`);
   };
 
+  if (loading && !isNewAssignment) {
+    return (
+      <div className="p-4 text-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div id="wd-assignments-editor" className="p-4">
-      <FormGroup className="mb-3">
-        <FormLabel htmlFor="wd-name">Assignment Name</FormLabel>
-        <FormControl
-          id="wd-name"
-          value={assignment.title}
-          onChange={(e) =>
-            setAssignment({ ...assignment, title: e.target.value })
-          }
-          placeholder="Assignment Name"
-        />
-      </FormGroup>
+      <h3>{isNewAssignment ? "New Assignment" : "Edit Assignment"}</h3>
+      
+      {error && (
+        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+          {error}
+          <button 
+            type="button" 
+            className="btn-close" 
+            onClick={() => setError("")}
+          ></button>
+        </div>
+      )}
 
-      <FormGroup className="mb-3">
-        <FormLabel htmlFor="wd-description">Description</FormLabel>
-        <FormControl
-          id="wd-description"
-          as="textarea"
-          rows={5}
-          value={assignment.description}
-          onChange={(e) =>
-            setAssignment({ ...assignment, description: e.target.value })
-          }
-          placeholder="Assignment Description"
-        />
-      </FormGroup>
+      <Form>
+        {/* Assignment Name */}
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="wd-assignment-name">Assignment Name</Form.Label>
+          <Form.Control
+            type="text"
+            id="wd-assignment-name"
+            value={assignment.title}
+            onChange={(e) =>
+              setAssignment({ ...assignment, title: e.target.value })
+            }
+            placeholder="Enter assignment name"
+            disabled={loading}
+          />
+        </Form.Group>
 
-      <FormGroup className="mb-3">
-        <FormLabel htmlFor="wd-points">Points</FormLabel>
-        <FormControl
-          id="wd-points"
-          type="number"
-          value={assignment.points}
-          onChange={(e) =>
-            setAssignment({ ...assignment, points: parseInt(e.target.value) || 0 })
-          }
-        />
-      </FormGroup>
+        {/* Description */}
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="wd-assignment-description">Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={5}
+            id="wd-assignment-description"
+            value={assignment.description}
+            onChange={(e) =>
+              setAssignment({ ...assignment, description: e.target.value })
+            }
+            placeholder="Enter assignment description"
+            disabled={loading}
+          />
+        </Form.Group>
 
-      <FormGroup className="mb-3">
-        <FormLabel htmlFor="wd-due-date">Due</FormLabel>
-        <FormControl
-          id="wd-due-date"
-          type="datetime-local"
-          value={assignment.dueDate}
-          onChange={(e) =>
-            setAssignment({ ...assignment, dueDate: e.target.value })
-          }
-        />
-      </FormGroup>
+        {/* Points */}
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="wd-assignment-points">Points</Form.Label>
+          <Form.Control
+            type="number"
+            id="wd-assignment-points"
+            value={assignment.points}
+            onChange={(e) =>
+              setAssignment({ ...assignment, points: parseInt(e.target.value) || 0 })
+            }
+            min="0"
+            disabled={loading}
+          />
+        </Form.Group>
 
-      <FormGroup className="mb-3">
-        <FormLabel htmlFor="wd-available-from">Available from</FormLabel>
-        <FormControl
-          id="wd-available-from"
-          type="datetime-local"
-          value={assignment.availableFrom}
-          onChange={(e) =>
-            setAssignment({ ...assignment, availableFrom: e.target.value })
-          }
-        />
-      </FormGroup>
+        {/* Due Date */}
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="wd-assignment-due">Due Date</Form.Label>
+          <Form.Control
+            type="datetime-local"
+            id="wd-assignment-due"
+            value={assignment.dueDate}
+            onChange={(e) =>
+              setAssignment({ ...assignment, dueDate: e.target.value })
+            }
+            disabled={loading}
+          />
+        </Form.Group>
 
-      <FormGroup className="mb-3">
-        <FormLabel htmlFor="wd-available-until">Until</FormLabel>
-        <FormControl
-          id="wd-available-until"
-          type="datetime-local"
-          value={assignment.availableUntil}
-          onChange={(e) =>
-            setAssignment({ ...assignment, availableUntil: e.target.value })
-          }
-        />
-      </FormGroup>
+        {/* Available From */}
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="wd-assignment-available-from">
+            Available From
+          </Form.Label>
+          <Form.Control
+            type="datetime-local"
+            id="wd-assignment-available-from"
+            value={assignment.availableFrom}
+            onChange={(e) =>
+              setAssignment({ ...assignment, availableFrom: e.target.value })
+            }
+            disabled={loading}
+          />
+        </Form.Group>
 
-      <hr />
+        {/* Available Until */}
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="wd-assignment-available-until">
+            Available Until
+          </Form.Label>
+          <Form.Control
+            type="datetime-local"
+            id="wd-assignment-available-until"
+            value={assignment.availableUntil}
+            onChange={(e) =>
+              setAssignment({ ...assignment, availableUntil: e.target.value })
+            }
+            disabled={loading}
+          />
+        </Form.Group>
 
-      <div className="d-flex justify-content-end gap-2">
-        <Button variant="secondary" onClick={handleCancel}>
-          Cancel
-        </Button>
-        <Button variant="danger" onClick={handleSave}>
-          Save
-        </Button>
-      </div>
+        {/* Action Buttons */}
+        <div className="d-flex justify-content-end gap-2">
+          <Button
+            variant="secondary"
+            onClick={handleCancel}
+            disabled={loading}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={handleSave}
+            disabled={loading}
+            id="wd-assignment-save-btn"
+          >
+            {loading ? "Saving..." : "Save"}
+          </Button>
+        </div>
+      </Form>
     </div>
   );
 }

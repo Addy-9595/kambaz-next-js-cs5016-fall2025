@@ -3,6 +3,8 @@ import { ReactNode } from "react";
 import { Provider } from "react-redux";
 import store from "./store";
 import KambazNavigation from "./Navigation";
+import Session from "./Account/Session";
+
 
 export default function KambazLayout({ 
   children 
@@ -11,6 +13,7 @@ export default function KambazLayout({
 }) {
   return (
     <Provider store={store}>
+           <Session>
       <div className="d-flex" style={{ minHeight: '100vh' }}>
         <div 
           className="d-none d-md-block bg-black"
@@ -34,6 +37,7 @@ export default function KambazLayout({
           {children}
         </div>
       </div>
+      </Session>
     </Provider>
   );
 }

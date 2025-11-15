@@ -1,24 +1,47 @@
 "use client";
 import { Table } from "react-bootstrap";
 import { useParams } from "next/navigation";
-import * as db from "../../../../Database";
 import { FaUserCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import * as client from "../../client";
 
 export default function PeopleTable() {
     const { cid } = useParams();
-    const { users, enrollments } = db;
+    const [users, setUsers] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                console.log("Fetching users for course:", cid);
+                const enrolledUsers = await client.findUsersForCourse(cid as string);
+                console.log("Received users:", enrolledUsers);
+                setUsers(enrolledUsers);
+                setError(null);
+            } catch (error: any) {
+                console.error("Error fetching users:", error);
+                console.error("Error response:", error.response?.data);
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        
+        fetchUsers();
+    }, [cid]);
     
-    console.log("Course ID (cid):", cid);
-    console.log("All enrollments:", enrollments);
-    console.log("All users:", users);
-    
-    const enrolledUsers = users.filter((usr) =>
-        enrollments.some((enrollment) =>
-            enrollment.user === usr._id && enrollment.course === cid
-        )
-    );
-    
-    console.log("Filtered enrolled users:", enrolledUsers);
+    if (loading) {
+        return <div className="p-4">Loading users...</div>;
+    }
+
+    if (error) {
+        return (
+            <div className="alert alert-danger m-4">
+                Error loading users: {error}
+            </div>
+        );
+    }
     
     return (
         <div id="wd-people-table">
@@ -34,14 +57,14 @@ export default function PeopleTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    {enrolledUsers.length === 0 ? (
+                    {users.length === 0 ? (
                         <tr>
                             <td colSpan={6} className="text-center">
-                                No students enrolled in this course. (Course ID: {cid})
+                                No students enrolled in this course.
                             </td>
                         </tr>
                     ) : (
-                        enrolledUsers.map((user: any) => (
+                        users.map((user: any) => (
                             <tr key={user._id}>
                                 <td className="wd-full-name text-nowrap">
                                     <FaUserCircle className="me-2 fs-1 text-secondary" />

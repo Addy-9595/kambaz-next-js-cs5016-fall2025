@@ -4,7 +4,6 @@ import { useParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import CoursesNavigation from "./Navigation";
 import ProtectedRoute from "../../Account/ProtectedRoute";
-import Breadcrumb from "./Breadcrumb";
 
 export default function CoursesLayout({ children }: { children: ReactNode }) {
   const { cid } = useParams();

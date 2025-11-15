@@ -1,35 +1,45 @@
 // app/(Kambaz)/Courses/[cid]/Assignments/reducer.ts
 import { createSlice } from "@reduxjs/toolkit";
-import { assignments } from "../../../Database";
-import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
-  assignments: assignments,
+  assignments: [] as any[],
 };
+
 const assignmentsSlice = createSlice({
   name: "assignments",
   initialState,
   reducers: {
-    addAssignment: (state, { payload: assignment }) => {
-      const newAssignment: any = {
-        ...assignment,
-        _id: uuidv4(),
-      };
-      state.assignments = [...state.assignments, newAssignment];
+    // Set all assignments (used when fetching from server)
+    setAssignments: (state, action) => {
+      state.assignments = action.payload;
     },
-    deleteAssignment: (state, { payload: assignmentId }) => {
-      state.assignments = state.assignments.filter(
-        (a: any) => a._id !== assignmentId
+    
+    // Add a new assignment
+    addAssignment: (state, action) => {
+      state.assignments = [...state.assignments, action.payload];
+    },
+    
+    // Update an existing assignment
+    updateAssignment: (state, action) => {
+      state.assignments = state.assignments.map((assignment: any) =>
+        assignment._id === action.payload._id ? action.payload : assignment
       );
     },
-    updateAssignment: (state, { payload: assignment }) => {
-      state.assignments = state.assignments.map((a: any) =>
-        a._id === assignment._id ? assignment : a
+    
+    // Delete an assignment
+    deleteAssignment: (state, action) => {
+      state.assignments = state.assignments.filter(
+        (assignment: any) => assignment._id !== action.payload
       );
     },
   },
 });
 
-export const { addAssignment, deleteAssignment, updateAssignment } =
-  assignmentsSlice.actions;
+export const { 
+  setAssignments, 
+  addAssignment, 
+  updateAssignment, 
+  deleteAssignment 
+} = assignmentsSlice.actions;
+
 export default assignmentsSlice.reducer;
