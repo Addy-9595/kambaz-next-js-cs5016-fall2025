@@ -15,8 +15,14 @@ export const findAssignmentsForCourse = async (courseId: string) => {
 };
 
 export const findAssignmentById = async (assignmentId: string) => {
-  const response = await axios.get(`${ASSIGNMENTS_API}/${assignmentId}`);
-  return response.data;
+  try {
+    const response = await axiosWithCredentials.get(`${ASSIGNMENTS_API}/${assignmentId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching assignment:', error);
+    console.error('Assignment ID:', assignmentId);
+    throw error;
+  }
 };
 
 export const createAssignment = async (courseId: string, assignment: any) => {

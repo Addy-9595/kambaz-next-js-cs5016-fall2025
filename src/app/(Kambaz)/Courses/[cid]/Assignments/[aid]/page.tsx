@@ -1,8 +1,7 @@
-// app/(Kambaz)/Courses/[cid]/Assignments/[aid]/page.tsx
 "use client";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "../reducer";
 import { Form, Button } from "react-bootstrap";
 import * as client from "../client";
@@ -32,6 +31,9 @@ export default function AssignmentEditor() {
   const router = useRouter();
   const dispatch = useDispatch();
   
+  // ✅ Get assignments from Redux store as fallback
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  
   const isNewAssignment = aid === "new";
   
   const [assignment, setAssignment] = useState({
@@ -53,6 +55,8 @@ export default function AssignmentEditor() {
       if (!isNewAssignment && aid) {
         try {
           setLoading(true);
+          
+          // ✅ Try to fetch from backend first
           const data = await client.findAssignmentById(aid as string);
           setAssignment({
             ...data,
@@ -60,9 +64,24 @@ export default function AssignmentEditor() {
             availableFrom: formatDateForInput(data.availableFrom),
             availableUntil: formatDateForInput(data.availableUntil),
           });
-        } catch (error) {
-          console.error("Error fetching assignment:", error);
-          setError("Failed to load assignment");
+        } catch (error: any) {
+          console.error("❌ Error fetching from backend:", error);
+          
+          // ✅ Fallback: Check Redux store
+          const localAssignment = assignments.find((a: any) => a._id === aid);
+          
+          if (localAssignment) {
+            console.log("✅ Found assignment in Redux store");
+            setAssignment({
+              ...localAssignment,
+              dueDate: formatDateForInput(localAssignment.dueDate),
+              availableFrom: formatDateForInput(localAssignment.availableFrom),
+              availableUntil: formatDateForInput(localAssignment.availableUntil),
+            });
+          } else {
+            console.error("❌ Assignment not found in Redux either");
+            setError("Failed to load assignment - not found");
+          }
         } finally {
           setLoading(false);
         }
@@ -70,63 +89,61 @@ export default function AssignmentEditor() {
     };
     
     fetchAssignment();
-  }, [aid, isNewAssignment]);
+  }, [aid, isNewAssignment, assignments]);
 
   // Handle form submission
-const handleSave = async () => {
-  // Validation
-  if (!assignment.title.trim()) {
-    setError("Assignment title is required");
-    return;
-  }
-  
-  if (!assignment.dueDate) {
-    setError("Due date is required");
-    return;
-  }
-  
-  try {
-    setLoading(true);
-    setError("");
-    
-    // ✅ FIXED: Better date conversion
-    const assignmentData = {
-      title: assignment.title,
-      description: assignment.description,
-      points: Number(assignment.points) || 100,
-      course: assignment.course,
-      // Only convert non-empty dates
-      dueDate: assignment.dueDate ? new Date(assignment.dueDate).toISOString() : new Date().toISOString(),
-      availableFrom: assignment.availableFrom ? new Date(assignment.availableFrom).toISOString() : new Date().toISOString(),
-      availableUntil: assignment.availableUntil ? new Date(assignment.availableUntil).toISOString() : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
-    };
-    
-    console.log("💾 Saving assignment data:", assignmentData);  // ✅ Add logging
-    
-    if (isNewAssignment) {
-      // Create new assignment
-      const newAssignment = await client.createAssignment(cid as string, assignmentData);
-      console.log("✅ New assignment created:", newAssignment);  // ✅ Add logging
-      dispatch(addAssignment(newAssignment));
-    } else {
-      // Update existing assignment
-      const updatedAssignment = await client.updateAssignment({
-        ...assignmentData,
-        _id: aid,
-      });
-      console.log("✅ Assignment updated:", updatedAssignment);  // ✅ Add logging
-      dispatch(updateAssignment(updatedAssignment));
+  const handleSave = async () => {
+    // Validation
+    if (!assignment.title.trim()) {
+      setError("Assignment title is required");
+      return;
     }
     
-    // Navigate back to assignments list
-    router.push(`/Courses/${cid}/Assignments`);
-  } catch (error: any) {
-    console.error("❌ Error saving assignment:", error);
-    console.error("📛 Error details:", error.response?.data);  // ✅ Add logging
-    setError(error.response?.data?.message || "Failed to save assignment. Please try again.");
-    setLoading(false);
-  }
-};
+    if (!assignment.dueDate) {
+      setError("Due date is required");
+      return;
+    }
+    
+    try {
+      setLoading(true);
+      setError("");
+      
+      const assignmentData = {
+        title: assignment.title,
+        description: assignment.description,
+        points: Number(assignment.points) || 100,
+        course: assignment.course,
+        dueDate: assignment.dueDate ? new Date(assignment.dueDate).toISOString() : new Date().toISOString(),
+        availableFrom: assignment.availableFrom ? new Date(assignment.availableFrom).toISOString() : new Date().toISOString(),
+        availableUntil: assignment.availableUntil ? new Date(assignment.availableUntil).toISOString() : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+      };
+      
+      console.log("💾 Saving assignment data:", assignmentData);
+      
+      if (isNewAssignment) {
+        // Create new assignment
+        const newAssignment = await client.createAssignment(cid as string, assignmentData);
+        console.log("✅ New assignment created:", newAssignment);
+        dispatch(addAssignment(newAssignment));
+      } else {
+        // Update existing assignment
+        const updatedAssignment = await client.updateAssignment({
+          ...assignmentData,
+          _id: aid,
+        });
+        console.log("✅ Assignment updated:", updatedAssignment);
+        dispatch(updateAssignment(updatedAssignment));
+      }
+      
+      // Navigate back to assignments list
+      router.push(`/Courses/${cid}/Assignments`);
+    } catch (error: any) {
+      console.error("❌ Error saving assignment:", error);
+      console.error("📛 Error details:", error.response?.data);
+      setError(error.response?.data?.message || "Failed to save assignment. Please try again.");
+      setLoading(false);
+    }
+  };
 
   const handleCancel = () => {
     router.push(`/Courses/${cid}/Assignments`);

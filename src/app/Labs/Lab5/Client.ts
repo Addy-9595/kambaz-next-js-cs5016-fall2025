@@ -15,7 +15,8 @@ export const fetchAssignment = async () => {
 };
 
 export const updateTitle = async (title: string) => {
-  const response = await axios.get(`${ASSIGNMENT_API}/title/${title}`);
+  const encodedTitle = encodeURIComponent(title);
+  const response = await axios.get(`${ASSIGNMENT_API}/title/${encodedTitle}`);
   return response.data;
 };
 

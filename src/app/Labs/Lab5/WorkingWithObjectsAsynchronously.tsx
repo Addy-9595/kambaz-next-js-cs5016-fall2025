@@ -1,4 +1,3 @@
-// app/Labs/Lab5/WorkingWithObjectsAsynchronously.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import { FormControl } from "react-bootstrap";
@@ -11,6 +10,7 @@ export default function WorkingWithObjectsAsynchronously() {
   const fetchAssignment = async () => {
     try {
       const fetchedAssignment = await client.fetchAssignment();
+      console.log("Fetched assignment:", fetchedAssignment);
       setAssignment(fetchedAssignment);
     } catch (error) {
       console.error("Error fetching assignment:", error);
@@ -24,10 +24,14 @@ export default function WorkingWithObjectsAsynchronously() {
   // Update assignment title on server
   const handleUpdateTitle = async () => {
     try {
+      console.log("Updating title to:", assignment.title);
       const updatedAssignment = await client.updateTitle(assignment.title);
+      console.log("Server returned:", updatedAssignment);
       setAssignment(updatedAssignment);
-    } catch (error) {
+      alert("Title updated successfully!"); // ← Add user feedback
+    } catch (error: any) {
       console.error("Error updating title:", error);
+      alert(`Error: ${error.message}`);
     }
   };
 
@@ -88,13 +92,13 @@ export default function WorkingWithObjectsAsynchronously() {
         </label>
       </div>
 
-      {/* Update Button - REQUIRED FOR RUBRIC */}
+      {/* Update Button */}
       <button
         className="btn btn-primary mb-3"
         onClick={handleUpdateTitle}
         id="wd-update-assignment-title"
       >
-        Update Title on Server
+        Update
       </button>
 
       {/* Display Current Assignment as JSON */}
