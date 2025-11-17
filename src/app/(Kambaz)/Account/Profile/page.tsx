@@ -12,6 +12,9 @@ export default function Profile() {
   const dispatch = useDispatch();
   const router = useRouter();
   
+  // ✅ Prevent hydration mismatch by waiting for client mount
+  const [mounted, setMounted] = useState(false);
+  
   // ✅ Initialize all fields with empty strings
   const [profile, setProfile] = useState({
     _id: "",
@@ -28,6 +31,11 @@ export default function Profile() {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // ✅ Set mounted on client side
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Load current user data into form
   useEffect(() => {
     if (currentUser) {
@@ -38,7 +46,8 @@ export default function Profile() {
         firstName: currentUser.firstName || "",
         lastName: currentUser.lastName || "",
         email: currentUser.email || "",
-        dob: currentUser.dob || "",
+        // ✅ Extract just the date part (yyyy-MM-dd) from ISO format
+        dob: currentUser.dob ? currentUser.dob.split('T')[0] : "",
         role: currentUser.role || "STUDENT"
       });
     }
@@ -73,6 +82,11 @@ export default function Profile() {
       console.error("Signout error:", err);
     }
   };
+
+  // ✅ Don't render until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   if (!currentUser) {
     return (
