@@ -33,7 +33,6 @@ export const signout = async () => {
   return response.data;
 };
 
-// Optional: Add these if you need them for your People/Users functionality
 export const findAllUsers = async () => {
   const response = await axios.get(`${API_BASE}/users`);
   return response.data;

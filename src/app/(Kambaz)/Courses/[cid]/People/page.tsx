@@ -1,13 +1,14 @@
 "use client";
 import { Table } from "react-bootstrap";
-import { useParams } from "next/navigation";
 import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import * as client from "../../client";
+import { useParams } from "next/dist/client/components/navigation";
 
-export default function PeopleTable() {
+export default function PeopleTable({ users: initialUsers = [], fetchUsers }:
+{ users?: any[]; fetchUsers: () => void; }) {
     const { cid } = useParams();
-    const [users, setUsers] = useState<any[]>([]);
+    const [users, setUsers] = useState<any[]>(initialUsers);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
