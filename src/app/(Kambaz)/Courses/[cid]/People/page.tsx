@@ -5,10 +5,9 @@ import { useEffect, useState } from "react";
 import * as client from "../../client";
 import { useParams } from "next/dist/client/components/navigation";
 
-export default function PeopleTable({ users: initialUsers = [], fetchUsers }:
-{ users?: any[]; fetchUsers: () => void; }) {
+export default function PeopleTable() {
     const { cid } = useParams();
-    const [users, setUsers] = useState<any[]>(initialUsers);
+    const [users, setUsers] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
