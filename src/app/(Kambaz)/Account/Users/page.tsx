@@ -81,7 +81,7 @@ export default function Users() {
   if (!currentUser || currentUser.role !== "ADMIN") {
     return <div className="alert alert-danger">Access Denied</div>;
   }
-
+// Display user management interface
   return (
     <div className="container-fluid">
       <div className="row">
