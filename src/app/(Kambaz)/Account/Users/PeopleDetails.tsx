@@ -1,4 +1,5 @@
 export default function PeopleDetails({ user }: { user: any }) {
+   // Display detailed information about a user
   return (
     <div className="border p-3">
       <h4>User Details</h4>
