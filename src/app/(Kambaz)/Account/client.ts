@@ -52,3 +52,13 @@ export const createUser = async (user: any) => {
   const response = await axios.post(`${API_BASE}/users`, user);
   return response.data;
 };
+
+export const findUsersByRole = async (role: string) => {
+  const response = await axios.get(`${API_BASE}/users?role=${role}`);
+  return response.data;
+};
+
+export const findUsersByPartialName = async (name: string) => {
+  const response = await axios.get(`${API_BASE}/users?name=${name}`);
+  return response.data;
+};

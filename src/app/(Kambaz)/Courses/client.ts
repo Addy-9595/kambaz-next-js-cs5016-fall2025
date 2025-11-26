@@ -29,8 +29,8 @@ export const createCourse = async (course: any) => {
   return response.data;
 };
 
-export const updateCourse = async (course: any) => {
-  const response = await axiosWithCredentials.put(`${COURSES_API}/${course._id}`, course);
+export const updateCourse = async (courseId: string, course: any) => {
+  const response = await axiosWithCredentials.put(`${COURSES_API}/${courseId}`, course);
   return response.data;
 };
 
