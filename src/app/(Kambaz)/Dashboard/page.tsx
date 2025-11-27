@@ -78,20 +78,22 @@ function DashboardContent() {
     }
   }, [currentUser, isFaculty, showAllCourses, dispatch]);
 
-  const handleEnroll = async (courseId: string) => {
-    try {
-      await enrollmentsClient.enrollInCourse(courseId);
+ const handleEnroll = async (courseId: string) => {
+  try {
+    await enrollmentsClient.enrollInCourse(courseId);
+    
+    if (showAllCourses) {
       setEnrolledCourseIds([...enrolledCourseIds, courseId]);
-      
-      if (!showAllCourses) {
-        const enrolledCourses = await coursesClient.findMyCourses();
-        dispatch(setCourses(enrolledCourses));
-      }
-    } catch (error) {
-      console.error("Error enrolling:", error);
-      alert("Failed to enroll in course");
+    } else {
+      const enrolledCourses = await coursesClient.findMyCourses();
+      dispatch(setCourses(enrolledCourses));
+      setEnrolledCourseIds(enrolledCourses.map((c: any) => c._id));
     }
-  };
+  } catch (error) {
+    console.error("Error enrolling:", error);
+    alert("Failed to enroll in course");
+  }
+};
 
   const handleUnenroll = async (courseId: string) => {
     if (!window.confirm("Are you sure you want to unenroll from this course?")) {
